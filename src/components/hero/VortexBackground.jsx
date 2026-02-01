@@ -26,9 +26,8 @@ const VortexBackground = () => {
         const PARTICLE_COUNT = 3000;
         
         // Physics State
-        const rotation = { x: 0, y: 0 };
-        const mouse = { x: 0, y: 0 };
-        const speed = { base: 2, current: 2 }; // Flight speed through tunnel
+        const scroll = { y: 0, target: 0 };
+        const speed = { base: 2 }; // Flight speed through tunnel
 
         class Particle {
             constructor() {
@@ -58,9 +57,9 @@ const VortexBackground = () => {
                 this.size = Math.random() * 3 + 1.5; 
             }
 
-            update(rotX, rotY) {
+            update(currentSpeed) {
                 // 1. Move forward (Flight effect)
-                this.z += speed.current;
+                this.z += currentSpeed;
 
                 // Loop/Recycle
                 if (this.z > 600) { // Passed camera
@@ -76,30 +75,24 @@ const VortexBackground = () => {
                 let tx = this.x * cosSpin - this.y * sinSpin;
                 let ty = this.y * cosSpin + this.x * sinSpin;
 
-                // 3. Apply Mouse Rotation (Look around)
-                // Rotate around Y
-                let finalX = tx * Math.cos(rotY) - this.z * Math.sin(rotY);
-                let z1 = this.z * Math.cos(rotY) + tx * Math.sin(rotY);
-                
-                // Rotate around X
-                let finalY = ty * Math.cos(rotX) - z1 * Math.sin(rotX);
-                let z2 = z1 * Math.cos(rotX) + ty * Math.sin(rotX);
+                // 3. No Mouse Rotation - Just fixed perspective
+                let finalX = tx;
+                let finalY = ty;
                 
                 // 4. Project to 2D
                 const fov = 600;
                 // Camera distance offset
                 const cameraZ = 800;
-                const scale = fov / (fov + z2 + cameraZ);
+                const scale = fov / (fov + this.z + cameraZ);
                 
-                if (z2 + cameraZ < 10) return; // Clipping
+                if (this.z + cameraZ < 10) return; // Clipping
 
                 this.screenX = (width/2) + finalX * scale;
                 this.screenY = (height/2) + finalY * scale;
                 this.renderSize = this.size * scale;
                 
                 // Opacity fade in from back (-3000) and fade out near front
-                // Map z from -3000...500 to 0...1...0 logic
-                const depthAlpha = Math.min(1, (z2 + 3000) / 1000); 
+                const depthAlpha = Math.min(1, (this.z + 3000) / 1000); 
                 this.alpha = depthAlpha * Math.min(1, Math.max(0.2, scale));
             }
 
@@ -118,40 +111,50 @@ const VortexBackground = () => {
 
         // GSAP Ticker
         const render = () => {
-             // Trail effect
+             // Calculate Scroll Physics
+             scroll.y += (scroll.target - scroll.y) * 0.1; // Smooth scroll
+             
+             // Warp Speed: Scroll increases speed
+             const currentSpeed = speed.base + (scroll.y * 0.05);
+             
+             // Fade Out: Scroll decreases opacity
+             // Fade roughly completely by 800px scroll
+             const globalAlpha = Math.max(0, 1 - (scroll.y / 800));
+
+             // Trail effect with scroll-based opacity
+             ctx.fillStyle = `rgba(0, 0, 0, ${globalAlpha > 0 ? 1 : 1})`; // Keep black bg? Or fade it too? 
+             // Actually, if we fade the canvas opacity, we don't need to do it here. 
+             // But we need to clear the frame.
              ctx.fillStyle = "black";
              ctx.fillRect(0, 0, width, height);
              
-             // Mouse rotation dampening
-            const targetRotX = mouse.y * 1.0; 
-            const targetRotY = mouse.x * 1.0;
-            
-            rotation.x += (targetRotX - rotation.x) * 0.05;
-            rotation.y += (targetRotY - rotation.y) * 0.05;
+             // If completely off screen/faded, skip drawing particles for performance
+             if (globalAlpha < 0.01) return;
 
-            // Accelerate on interaction?
-            // speed.current = 5 + Math.abs(mouse.x * 10); 
-            // Keep steady for now
+             ctx.save();
+             ctx.globalAlpha = globalAlpha;
 
-            particles.forEach(p => {
-                p.update(rotation.x, rotation.y);
+             particles.forEach(p => {
+                p.update(currentSpeed);
                 p.draw(ctx);
-            });
+             });
+             
+             ctx.restore();
         };
 
         gsap.ticker.add(render);
-
-        const handleMouseMove = (e) => {
-            mouse.x = (e.clientX / width - 0.5) * 2;
-            mouse.y = (e.clientY / height - 0.5) * 2;
-        };
         
-        window.addEventListener("mousemove", handleMouseMove);
+        const handleScroll = () => {
+             scroll.target = window.scrollY;
+        };
+
+        
+        window.addEventListener("scroll", handleScroll);
         window.addEventListener("resize", handleResize);
 
         return () => {
             gsap.ticker.remove(render);
-            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("resize", handleResize);
         };
     }, []);
