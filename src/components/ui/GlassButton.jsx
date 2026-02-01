@@ -1,6 +1,6 @@
 "use client";
-import React, { useRef } from "react";
-import gsap from "gsap";
+import React from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const GlassButton = ({ 
@@ -8,9 +8,10 @@ const GlassButton = ({
   className, 
   variant = "primary", 
   onClick,
+  whileHover = { scale: 1.05 },
+  whileTap = { scale: 0.95 },
   ...props 
 }) => {
-  const btnRef = useRef(null);
 
   const getVariantClasses = () => {
     switch(variant) {
@@ -26,29 +27,20 @@ const GlassButton = ({
     }
   };
 
-  const handleMouseEnter = () => {
-    gsap.to(btnRef.current, { scale: 1.05, duration: 0.2, ease: "power1.out" });
-  };
-
-  const handleMouseLeave = () => {
-    gsap.to(btnRef.current, { scale: 1, duration: 0.2, ease: "power1.out" });
-  };
-
   return (
-    <button
-      ref={btnRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+    <motion.button
+      whileHover={whileHover}
+      whileTap={whileTap}
       onClick={onClick}
       className={cn(
-        "relative px-6 py-3 rounded-full font-medium text-sm tracking-wide transition-all duration-300 flex items-center justify-center gap-2",
+        "relative px-6 py-3 rounded-full font-medium text-sm tracking-wide transition-colors duration-300 flex items-center justify-center gap-2",
         getVariantClasses(),
         className
       )}
       {...props}
     >
       {children}
-    </button>
+    </motion.button>
   );
 };
 
