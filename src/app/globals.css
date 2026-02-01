@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  /* Pure Black for maximum contrast */
+  --foreground: #ffffff;
+  --surface: #0a0a0a;
+  --surface-highlight: #171717;
+
+  /* Monochrome Hierarchy */
+  --primary: #ffffff;
+  /* Pure White */
+  --primary-foreground: #000000;
+  --accent: #525252;
+  /* Neutral 600 - Subtle Gray */
+
+  /* Mapping Neons to Grayscale Intensities */
+  --neon-blue: #ffffff;
+  /* High Intensity (White) */
+  --neon-purple: #a3a3a3;
+  /* Medium Intensity (Neutral 400) */
+  --neon-orange: #737373;
+  /* Low Intensity (Neutral 500) */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-highlight: var(--surface-highlight);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-neon-blue: var(--neon-blue);
+  --color-neon-purple: var(--neon-purple);
+  --color-neon-orange: var(--neon-orange);
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 50%);
+  /* Subtle top spotlight */
+}
+
+/* Custom Utilities for Premium feel */
+.glass-panel {
+  @apply backdrop-blur-2xl bg-black/40 border border-white/5 shadow-2xl;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-white/60;
+}
+
+.text-gradient-primary {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-neon-blue via-primary to-accent;
+}
