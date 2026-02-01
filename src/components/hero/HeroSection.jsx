@@ -105,7 +105,7 @@ const HeroSection = () => {
       </motion.div>
       
       {/* Vignette */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(transparent_30%,_black_100%)] z-0 opacity-80" />
+      <div />
 
     </section>
   );

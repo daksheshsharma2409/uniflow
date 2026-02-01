@@ -37,10 +37,8 @@
 }
 
 body {
-  background-color: var(--background);
   color: var(--foreground);
-  background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 50%);
-  /* Subtle top spotlight */
+  /* Background removed to allow Vortex Animation to show through */
 }
 
 /* Custom Utilities for Premium feel */

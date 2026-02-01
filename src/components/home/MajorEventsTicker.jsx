@@ -46,7 +46,7 @@ export default function MajorEventsTicker() {
   if (tickerEvents.length === 0) return null;
 
   return (
-    <section className="py-12 bg-black">
+    <section className="py-12">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-5xl font-black text-white mb-8 tracking-tighter">
             MAJOR UPCOMING EVENTS
