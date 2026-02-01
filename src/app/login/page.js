@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
 import GlassButton from "@/components/ui/GlassButton";
 import { Mail, Lock, LogIn, ArrowLeft } from "lucide-react";
-import GridBackground from "@/components/hero/GridBackground";
+import VortexBackground from "@/components/hero/VortexBackground";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -26,8 +26,8 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden px-6">
-       <div className="absolute inset-0 z-0 opacity-50">
-          <GridBackground />
+       <div className="absolute inset-0 z-0 opacity-50 pointer-events-none">
+          <VortexBackground />
        </div>
 
        <div className="w-full max-w-md relative z-10">
