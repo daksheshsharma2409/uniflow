@@ -101,7 +101,101 @@ const CULTURAL_IMITS = [
     "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=1000"
 ];
 
+export const MAJOR_EVENTS = [
+  {
+     id: "lfx-spring-2026",
+     title: "LFX Mentorship",
+     name: "LFX Mentorship", // Backwards compat
+     deadline: "2026-02-10", 
+     link: "https://lfx.linuxfoundation.org/mentorship/",
+     color: "text-neon-green",
+     type: "Mentorship",
+     description: "Open source mentorship program by Linux Foundation.",
+     organizer: "Linux Foundation",
+     location: "Remote",
+     image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1000",
+     tags: ["Open Source", "Mentorship", "Code"],
+     prize: "Stipend",
+     prizeValue: 500000,
+     date: "2026-02-10",
+     coordinates: { lat: 0, lng: 0 }
+  },
+  {
+     id: "gsoc-2026",
+     title: "Google Summer of Code",
+     name: "Google Summer of Code",
+     deadline: "2026-03-31",
+     link: "https://summerofcode.withgoogle.com/",
+     color: "text-neon-orange",
+     type: "Mentorship",
+     description: "Global program focused on bringing more student developers into open source.",
+     organizer: "Google",
+     location: "Remote",
+     image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1000",
+     tags: ["Open Source", "Google", "Development"],
+     prize: "Stipend",
+     prizeValue: 1000000,
+     date: "2026-03-31",
+     coordinates: { lat: 0, lng: 0 }
+  },
+  {
+     id: "sih-2026",
+     title: "Smart India Hackathon",
+     name: "Smart India Hackathon",
+     deadline: "2026-09-15",
+     link: "https://www.sih.gov.in/",
+     color: "text-neon-blue",
+     type: "Hackathon",
+     description: "World's biggest open innovation model.",
+     organizer: "Govt of India",
+     location: "India",
+     image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=1000",
+     tags: ["Innovation", "Hackathon", "Government"],
+     prize: "₹1,00,000",
+     prizeValue: 100000,
+     date: "2026-09-15",
+     coordinates: { lat: 28.61, lng: 77.20 }
+  },
+  {
+     id: "build-bharat-2026",
+     title: "Build for Bharat",
+     name: "Build for Bharat",
+     deadline: "2026-04-20",
+     link: "https://buildforbharat.ai/",
+     color: "text-neon-purple",
+     type: "Hackathon",
+     description: "Solving India's hardest problems.",
+     organizer: "ONDC",
+     location: "Bangalore",
+     image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1000",
+     tags: ["AI", "Bharat", "Startup"],
+     prize: "₹10,00,000",
+     prizeValue: 1000000,
+     date: "2026-04-20",
+     coordinates: { lat: 0, lng: 0 }
+  },
+  {
+     id: "hacktoberfest-2026",
+     title: "Hacktoberfest",
+     name: "Hacktoberfest",
+     deadline: "2026-10-01",
+     link: "https://hacktoberfest.com/",
+     color: "text-neon-orange",
+     type: "Open Source",
+     description: "Celebration of Open Source.",
+     organizer: "DigitalOcean",
+     location: "Remote",
+     image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1000",
+     tags: ["Open Source", "Git", "Community"],
+     prize: "Swag",
+     prizeValue: 0,
+     date: "2026-10-01",
+     coordinates: { lat: 0, lng: 0 }
+  }
+];
+
 export const EVENTS = [
+  ...MAJOR_EVENTS,
   ...generateEvents(50, "Hackathon", 100, TAGS.Hackathons, HACKATHON_IMITS),
   ...generateEvents(50, "Workshop", 200, TAGS.Workshops, WORKSHOP_IMITS),
   ...generateEvents(50, "Cultural", 300, TAGS.Cultural, CULTURAL_IMITS)
